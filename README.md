@@ -58,7 +58,7 @@ Contributions are welcome! If you’d like to improve this project, feel free to
 
 ## Author
 
-**My Name** - [JUde Mpoyo](https://github.com/judempoyo)
+**My Name** - [Jude Mpoyo](https://github.com/judempoyo)
 
 ## License
 
