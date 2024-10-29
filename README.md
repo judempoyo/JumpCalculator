@@ -14,6 +14,8 @@ This project is a simple calculator developed using Tailwind CSS for styling and
   
 ![Screenshot from 2024-10-29 1![Screenshot from 2024-10-29 15-00-21](https://github.com/user-attachments/assets/cbb53cb0-e4c1-49b7-9226-660fc646cc3d)
 5-00-14](https://github.com/user-attachments/assets/87791fb5-a5e0-4412-8d71-b161a90440cc)
+![Screenshot from 2024-10-29 15-00-21](https://github.com/user-attachments/assets/e8e0f806-1de7-4b07-a8a8-4646656f9532)
+
 
 ## Features
 
