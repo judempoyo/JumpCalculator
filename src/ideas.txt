@@ -1,0 +1,68 @@
+
+let buttons = document.querySelectorAll('.btn');
+let value = document.getElementById('value');
+
+for (let i = 0; i < buttons.length; i++) {
+  buttons[i].addEventListener('click',function(){
+    if (this.innerHTML == '=') {
+      value.innerHTML = eval(value.innerHTML);
+      
+    }
+    else{
+      if (this.innerHTML == ".") {
+        if(value.innerHTML.indexOf('.') == -1) {
+          value.innerHTML += ".";
+        }
+        else if(value.innerHTML[value.innerHTML.length - 1] == '.' || value.innerHTML.indexOf('.') != -1 ) {
+          
+          if ( value.innerHTML.indexOf('-') == -1 ||  value.innerHTML.indexOf('+') == -1 ||  value.innerHTML.indexOf('*') == -1 ||  value.innerHTML.indexOf('/') == -1){
+
+            if(value.innerHTML[value.innerHTML.length - 1] != '.' ){
+
+              value.innerHTML += '.';
+            }
+          }
+        }
+
+        
+      } 
+      else {
+      if(this.innerHTML == 'Clear'){
+        value.innerHTML = "";
+      } else {
+        if ( value.innerHTML == '' && (this.innerHTML == '*' || this.innerHTML == '+' || this.innerHTML == '/')) {
+        value.innerHTML = "";
+          
+        } else {
+          if (value.innerHTML.length > 1) {
+            var lastchar = value.innerHTML[value.innerHTML.length - 1];
+              
+            if (lastchar == '*' || lastchar == '+' || lastchar == '/' || lastchar == '-' || lastchar == '.' ) {
+             
+
+                if (this.innerHTML == '*' || this.innerHTML == '+' || this.innerHTML == '/' || this.innerHTML == '-' || this.innerHTML == '.') {
+                  if (this.innerHTML != '.') {
+                    value.innerHTML = value.innerHTML.replace(lastchar,this.innerHTML) ;
+                  }
+                } else {
+                  value.innerHTML += this.innerHTML;
+                }
+                
+              
+            
+            }
+           
+            else{
+              value.innerHTML += this.innerHTML;
+            }
+            
+          } else {
+            value.innerHTML += this.innerHTML;
+          }
+        
+      }
+      }
+    }
+  }9
+  });
+}

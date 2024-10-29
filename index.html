@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth focus:scroll-auto">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> 
+    <link href="./src/output.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+     <!--fav-icon-->
+
+    <title>Jump Calculator</title>
+
+ 
+  </head>
+  <body class="text-white bg-gray-900">
+    <button onclick="toggleTheme()" class="fixed self-end p-2 text-white bg-gray-600 rounded-full top-2 md:top-10 right-3 md:right-20 hover:bg-gray-700">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path id="theme-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+      </svg>
+    </button>
+
+    <div class="flex items-center justify-center w-screen h-screen">
+
+        <div class="items-center px-4 py-8 text-center shadow-md rounded-2xl shadow-gray-300 place-content-center bg-slate-50 dark:bg-inherit".>
+            <h2 class="items-end w-full h-24 mt-3 text-4xl font-bold text-right rounded-md shadow-md shadow-gray-300 mb-9 place-content-center" id="value"></h2>
+          <div class="grid grid-cols-4 gap-4">
+            <div class="items-center h-24 col-span-2 overflow-hidden text-2xl font-semibold text-center bg-red-500 rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 w-50 place-content-center btn">Clear</div>
+            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">/</div>
+            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">*</div>
+            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">7</div>
+            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">8</div>
+            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">9</div>
+            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">-</div>
+            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">4</div>
+            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">5</div>
+            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">6</div>
+            <div class="items-center w-24 row-span-2 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 h-50 place-content-center btn">+</div>
+            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">1</div>
+            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">2</div>
+            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">3</div>
+            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">00</div>
+            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">0</div>
+            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">.</div>
+            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">=</div>
+          </div>
+        </div>
+    </div>
+
+  <footer class="p-6 text-center" >
+    <p class="" >&copy; 2024 Jude Mpoyo</p>
+  </footer>
+  
+    <script src="./src/script.js"></script>
+  </body>
+</html>
+
