@@ -85,7 +85,7 @@ function toggleTheme() {
   body.classList.toggle("light-theme");
   
 
-  const buttons = document.querySelectorAll('.btn, .value, .calculator');
+  const buttons = document.querySelectorAll('.btn, .value, .calculator, .settings');
   buttons.forEach((div) => {
     div.classList.toggle("bg-gray-800"); // Dark div background
     //div.classList.toggle("shadow-green-300"); // Dark div background
