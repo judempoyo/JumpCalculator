@@ -1,49 +1,80 @@
-const buttons = document.querySelectorAll('.btn');
-const valueDisplay = document.getElementById('value');
+let decimalPlaces = 2;
 
-buttons.forEach(button => {
-  button.addEventListener('click', () => {
-    const buttonValue = button.innerHTML;
+// Function to update decimal places
+function updateDecimalPlaces(places) {
+  decimalPlaces = places;
+  const currentValue = document.getElementById('value').textContent;
+  const formattedValue = parseFloat(currentValue).toFixed(decimalPlaces);
+  document.getElementById('value').textContent = formattedValue;
+}
 
-    if (buttonValue === '=') {
+  const buttons = document.querySelectorAll('.btn');
+  const valueDisplay = document.getElementById('value');
+
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      const buttonValue = button.innerHTML;
+
+      if (buttonValue === '=') {
+        try {
+          valueDisplay.innerHTML = eval(valueDisplay.innerHTML);
+        } catch (error) {
+          valueDisplay.innerHTML = 'Error';
+        }
+      } else {
+        handleInput(buttonValue);
+      }
+    });
+  });
+
+  function handleInput(input) {
+    if (input === 'C') {
+      valueDisplay.innerHTML = '';
+    } else if (input === 'pi') {
+      valueDisplay.innerHTML += Math.PI;
+    } else if (input === '√') {
       try {
-        valueDisplay.innerHTML = eval(valueDisplay.innerHTML);
+        valueDisplay.innerHTML = Math.sqrt(eval(valueDisplay.innerHTML));
       } catch (error) {
         valueDisplay.innerHTML = 'Error';
       }
+    } else if (input === 'mod') {
+      valueDisplay.innerHTML += '%';
+    } else if (input.includes('x')) { // For the x² button
+      const currentValue = eval(valueDisplay.innerHTML);
+      valueDisplay.innerHTML = Math.pow(currentValue, 2); // Square the current value
+    } else if (input === '.') {
+      if (!valueDisplay.innerHTML.includes('.')) {
+        valueDisplay.innerHTML += input;
+      }
     } else {
-      handleInput(buttonValue);
-    }
-  });
-});
+      const lastChar = valueDisplay.innerHTML[valueDisplay.innerHTML.length - 1];
 
-function handleInput(input) {
-  if (input === 'Clear') {
-    valueDisplay.innerHTML = '';
-  } else if (input === '.') {
-    if (!valueDisplay.innerHTML.includes('.')) {
-      valueDisplay.innerHTML += input;
-    } else {
-      const regex = /[+\-/*]/
-      if (regex.test(valueDisplay.innerHTML)) {
-      valueDisplay.innerHTML += input;        
+      if (isOperator(lastChar) && isOperator(input)) {
+        valueDisplay.innerHTML = valueDisplay.innerHTML.slice(0, -1) + input;
+      } else {
+        valueDisplay.innerHTML += input;
       }
     }
-  } else {
-    const lastChar = valueDisplay.innerHTML[valueDisplay.innerHTML.length - 1];
-
-    if (isOperator(lastChar) && isOperator(input)) {
-      valueDisplay.innerHTML = valueDisplay.innerHTML.slice(0, -1) + input;
-    } else {
-      valueDisplay.innerHTML += input;
-    }
   }
+
+  function isOperator(character) {
+    return ['+', '-', '*', '/', '%'].includes(character);
+  }
+
+
+
+
+ // Function to update decimal places
+ function updateDecimalPlaces(places) {
+  // Update the calculator to display the specified number of decimal places
 }
 
-function isOperator(character) {
-  return ['+', '-', '*', '/'].includes(character);
+// Function to change equal button color
+function changeEqualButtonColor(color) {
+  const equalButton = document.getElementById('equalbtn');
+  equalButton.style.backgroundColor = color;
 }
-
 
 function toggleTheme() {
   const body = document.body;
@@ -54,6 +85,30 @@ function toggleTheme() {
   body.classList.toggle("light-theme");
   
 
+  const buttons = document.querySelectorAll('.btn, .value, .calculator');
+  buttons.forEach((div) => {
+    div.classList.toggle("bg-gray-800"); // Dark div background
+    //div.classList.toggle("shadow-green-300"); // Dark div background
+    div.classList.toggle("bg-gray-100"); // Light div background
+    div.classList.toggle("shadow-gray-500"); // Dark div background
+    // Light div text Light div hover
+  });
+
+  const alphas = document.querySelectorAll('.alpha');
+  alphas.forEach((div) => {
+    div.classList.toggle("bg-gray-600"); // Dark div background
+    //div.classList.toggle("shadow-green-300"); // Dark div background
+    div.classList.toggle("bg-gray-300"); // Light div background
+    // Light div text Light div hover
+  });
+
+  /* const backspace = document.getElementById('backspace');
+  if (body.classList.contains("bg-gray-900")) {
+    backspace.setAttribute("fill", "#fff");
+  } else{
+    backspace.removeAttribute("fill");
+  } */
+  
   // Save the theme preference in local storage
   if (body.classList.contains("bg-gray-900")) {
     localStorage.setItem("theme", "dark");
@@ -85,4 +140,23 @@ window.onload = function () {
     toggleTheme();
   }
 
+}
+
+// Function to toggle menu visibility
+function toggleMenu() {
+  const menu = document.getElementById('customization-menu');
+  menu.classList.toggle('hidden');
+}
+// Function to change calculator background color
+function changeCalculatorBackgroundColor(color) {
+  const calculator = document.querySelector('.calculator');
+  calculator.style.backgroundColor = color;
+}
+
+// Function to change text color
+function changeTextColor(color) {
+  const buttons = document.querySelectorAll('.btn');
+  buttons.forEach(button => {
+      button.style.color = color;
+  });
 }

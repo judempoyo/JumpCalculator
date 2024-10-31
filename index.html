@@ -1,57 +1,106 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth focus:scroll-auto">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> 
     <link href="./src/output.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-     <!--fav-icon-->
-
+    
     <title>Jump Calculator</title>
-
- 
-  </head>
-  <body class="text-white bg-gray-900">
-    <button onclick="toggleTheme()" class="fixed self-end p-2 text-white bg-gray-600 rounded-full top-2 md:top-10 right-3 md:right-20 hover:bg-gray-700">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path id="theme-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
-      </svg>
+</head>
+<body class="text-white bg-gray-900 transition-all duration-300">
+    <button onclick="toggleTheme()" class="fixed self-end p-2 text-white bg-gray-600 rounded-full top-2 md:top-10 right-3 md:right-20 hover:bg-gray-700 transition-transform transform hover:scale-110">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path id="theme-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+        </svg>
     </button>
+    
+    <!-- Toggle Menu Button -->
+    <button onclick="toggleMenu()" class="fixed p-2 text-white bg-gray-600 rounded-full top-5 left-30 hover:bg-gray-700 transition-transform transform hover:scale-110">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M5.636 5.636l1.414 1.414M18.364 18.364l1.414 1.414M4 12h4m4 0h4m-4-4l4 4-4 4" />
+      </svg>
+  </button>
 
-    <div class="flex items-center justify-center w-screen h-screen">
+    <!-- Menu -->
+    <div id="customization-menu" class="hidden fixed top-16 left-16 bg-gray-800 p-4 rounded-lg shadow-lg transition-all duration-300">
+        <h3 class="text-lg font-bold">Customize UI</h3>
+        
+        <!-- Number of Decimals -->
+        <div class="mt-2">
+            <label for="decimal-places" class="block text-sm font-medium mb-2">Number of Decimal Places</label>
+            <input type="number" id="decimal-places" min="0" max="10" value="2" class="p-1 h-10 w-20 block bg-white border border-gray-200 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500" onchange="updateDecimalPlaces(this.value)">
+        </div>
+        
+        <!-- Button Color -->
+        <div class="mt-2">
+            <label for="btncolor" class="block text-sm font-medium mb-2">Equal Button Color</label>
+            <input type="color" name="btncolor" id="btncolor" class="p-1 h-10 w-14 block bg-white border border-gray-200 rounded-lg" value="#0f9b42" title="Choose your color" onchange="changeEqualButtonColor(this.value)">
+        </div>
+        
+        <!-- Background Color -->
+        <div class="mt-2">
+            <label for="bgcolor" class="block text-sm font-medium mb-2">Calculator Background Color</label>
+            <input type="color" name="bgcolor" id="bgcolor" class="p-1 h-10 w-14 block bg-white border border-gray-200 rounded-lg" value="#1f2937" title="Choose your background color" onchange="changeCalculatorBackgroundColor(this.value)">
+        </div>
 
-        <div class="items-center px-4 py-8 text-center shadow-md rounded-2xl shadow-gray-300 place-content-center bg-slate-50 dark:bg-inherit".>
-            <h2 class="items-end w-full h-24 mt-3 text-4xl font-bold text-right rounded-md shadow-md shadow-gray-300 mb-9 place-content-center" id="value"></h2>
-          <div class="grid grid-cols-4 gap-4">
-            <div class="items-center h-24 col-span-2 overflow-hidden text-2xl font-semibold text-center bg-red-500 rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 w-50 place-content-center btn">Clear</div>
-            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">/</div>
-            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">*</div>
-            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">7</div>
-            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">8</div>
-            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">9</div>
-            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">-</div>
-            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">4</div>
-            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">5</div>
-            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">6</div>
-            <div class="items-center w-24 row-span-2 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 h-50 place-content-center btn">+</div>
-            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">1</div>
-            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">2</div>
-            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">3</div>
-            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">00</div>
-            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">0</div>
-            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">.</div>
-            <div class="items-center w-24 h-24 overflow-hidden text-2xl font-semibold text-center rounded-md shadow-md cursor-pointer shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">=</div>
+        <!-- Text Color -->
+        <div class="mt-2">
+            <label for="textcolor" class="block text-sm font-medium mb-2">Text Color</label>
+            <input type="color" name="textcolor" id="textcolor" class="p-1 h-10 w-14 block bg-white border border-gray-200 rounded-lg" value="#ffffff" title ="Choose your text color" onchange="changeTextColor(this.value)">
+        </div>
+    </div>
+  
+    <div class="flex items-center justify-center w-screen h-screen transition-all duration-300">
+        <div class="items-center px-4 py-8 text-center bg-gray-800 shadow-md rounded-2xl shadow-gray-300 place-content-center calculator transition-all duration-300">
+            <h2 class="items-end w-full h-24 mt-3 text-4xl font-bold text-right bg-gray-800 rounded-md shadow-md shadow-gray-300 mb-9 place-content-center value" id="value"></h2>
+            <div class="grid grid-cols-5 gap-4">
+            <div class="items-center overflow-hidden font-semibold text-center bg-gray-800 rounded-md shadow-md cursor-pointer w-16 h-16 md:h-24 md:w-24 text-1xl md:text-2xl shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">C</div>
+            <div class="items-center overflow-hidden font-semibold text-center bg-gray-800 rounded-md shadow-md cursor-pointer w-16 h-16 md:h-24 md:w-24 text-1xl md:text-2xl shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">(</div>
+            <div class="items-center overflow-hidden font-semibold text-center bg-gray-800 rounded-md shadow-md cursor-pointer w-16 h-16 md:h-24 md:w-24 text-1xl md:text-2xl shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">)</div>
+            <div class="items-center overflow-hidden font-semibold text-center bg-gray-800 rounded-md shadow-md cursor-pointer w-16 h-16 md:h-24 md:w-24 text-1xl md:text-2xl shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">mod</div>
+            <div class="items-center overflow-hidden font-semibold text-center bg-gray-800 rounded-md shadow-md cursor-pointer w-16 h-16 md:h-24 md:w-24 text-1xl md:text-2xl shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">pi</div>
+            <div class="items-center overflow-hidden font-semibold text-center bg-gray-600 rounded-md shadow-md cursor-pointer w-16 h-16 md:h-24 md:w-24 text-1xl md:text-2xl alpha shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">7</div>
+            <div class="items-center overflow-hidden font-semibold text-center bg-gray-600 rounded-md shadow-md cursor-pointer w-16 h-16 md:h-24 md:w-24 text-1xl md:text-2xl alpha shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">8</div>
+            <div class="items-center overflow-hidden font-semibold text-center bg-gray-600 rounded-md shadow-md cursor-pointer w-16 h-16 md:h-24 md:w-24 text-1xl md:text-2xl alpha shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">9</div>
+            <div class="items-center overflow-hidden font-semibold text-center bg-gray-800 rounded-md shadow-md cursor-pointer w-16 h-16 md:h-24 md:w-24 text-1xl md:text-2xl shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">/</div>
+            <div class="items-center overflow-hidden font-semibold text-center bg-gray-800 rounded-md shadow-md cursor-pointer w-16 h-16 md:h-24 md:w-24 text-1xl md:text-2xl shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">√</div>
+            
+            <div class="items-center overflow-hidden font-semibold text-center bg-gray-600 rounded-md shadow-md cursor-pointer w-16 h-16 md:h-24 md:w-24 text-1xl md:text-2xl alpha shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">4</div>
+            <div class="items-center overflow-hidden font-semibold text-center bg-gray-600 rounded-md shadow-md cursor-pointer w-16 h-16 md:h-24 md:w-24 text-1xl md:text-2xl alpha shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">5</div>
+            <div class="items-center overflow-hidden font-semibold text-center bg-gray-600 rounded-md shadow-md cursor-pointer w-16 h-16 md:h-24 md:w-24 text-1xl md:text-2xl alpha shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">6</div>
+            <div class="items-center overflow-hidden font-semibold text-center bg-gray-800 rounded-md shadow-md cursor-pointer w-16 h-16 md:h-24 md:w-24 text-1xl md:text-2xl shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">*</div>
+            <div class="items-center overflow-hidden font-semibold text-center bg-gray-800 rounded-md shadow-md cursor-pointer w-16 h-16 md:h-24 md:w-24 text-1xl md:text-2xl shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">x <sup>2</sup></div>
+            
+            <div class="items-center overflow-hidden font-semibold text-center bg-gray-600 rounded-md shadow-md cursor-pointer w-16 h-16 md:h-24 md:w-24 text-1xl md:text-2xl alpha shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">1</div>
+            <div class="items-center overflow-hidden font-semibold text-center bg-gray-600 rounded-md shadow-md cursor-pointer w-16 h-16 md:h-24 md:w-24 text-1xl md:text-2xl alpha shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">2</div>
+            <div class="items-center overflow-hidden font-semibold text-center bg-gray-600 rounded-md shadow-md cursor-pointer w-16 h-16 md:h-24 md:w-24 text-1xl md:text-2xl alpha shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">3</div>
+            <div class="items-center overflow-hidden font-semibold text-center bg-gray-800 rounded-md shadow-md cursor-pointer w-16 h-16 md:h-24 md:w-24 text-1xl md:text-2xl shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">-</div>
+            <div class="items-center md:w-24 row-span-2 overflow-hidden font-semibold text-center bg-gray-800 rounded-md shadow-md cursor-pointer text-1xl md:text-2xl md:h-50 shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn " id="equalbtn">=</div>
+            <div class="items-center overflow-hidden font-semibold text-center bg-gray-600 rounded-md shadow-md cursor-pointer w-16 h-16 md:h-24 md:w-24 text-1xl md:text-2xl alpha shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">0</div>
+            <div class="items-center overflow-hidden font-semibold text-center bg-gray-800 rounded-md shadow-md cursor-pointer w-16 h-16 md:h-24 md:w-24 text-1xl md:text-2xl shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">.</div>
+            <div class="items-center overflow-hidden font-semibold text-center bg-gray-800 rounded-md shadow-md cursor-pointer w-16 h-16 md:h-24 md:w-24 text-1xl md:text-2xl shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">%</div>
+            <div class="items-center overflow-hidden font-semibold text-center bg-gray-800 rounded-md shadow-md cursor-pointer w-16 h-16 md:h-24 md:w-24 text-1xl md:text-2xl shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">+</div>
+            <!--<div class="items-center overflow-hidden font-semibold text-center bg-gray-800 rounded-md shadow-md cursor-pointer w-16 h-16 md:h-24 md:w-24 text-1xl md:text-2xl shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn">1/x</div>
+            
+             <div class="items-center overflow-hidden font-semibold text-center bg-gray-800 rounded-md shadow-md cursor-pointer md:h-24 md:w-24 shadow-gray-300 hover:translate-y-2 hover:text-4xl hover:shadow-lg hover:shadow-gray-300 place-content-center btn"><svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="-12 -12 48 48" xmlns="http://www.w3.org/2000/svg"><path d="m22 6c0-.552-.448-1-1-1h-12.628c-.437 0-.853.191-1.138.523-1.078 1.256-3.811 4.439-4.993 5.815-.16.187-.241.419-.241.651 0 .231.08.463.24.651 1.181 1.38 3.915 4.575 4.994 5.835.285.333.701.525 1.14.525h12.626c.552 0 1-.448 1-1 0-2.577 0-9.423 0-12zm-13.628.5h12.128v11h-12.126l-4.715-5.51zm5.637 4.427 1.71-1.71c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.384-.219.531l-1.711 1.711 1.728 1.728c.147.147.22.339.22.53 0 .427-.349.751-.75.751-.192 0-.384-.073-.531-.219l-1.728-1.729-1.728 1.729c-.146.146-.339.219-.531.219-.401 0-.75-.324-.75-.751 0-.191.073-.383.22-.53l1.728-1.728-1.788-1.787c-.146-.148-.219-.339-.219-.532 0-.425.346-.749.751-.749.192 0 .384.073.53.219z" fill-rule="nonzero" id="backspace"/></svg></div> -->
+            
+          
+           
+           
+            
+            
           </div>
         </div>
     </div>
 
-  <footer class="p-6 text-center" >
-    <p class="" >&copy; 2024 Jude Mpoyo</p>
+ 
+    <footer class="p-6 text-center transition-all duration-300" >
+      <p class="" >&copy; 2024 Jude Mpoyo</p>
   </footer>
-  
-    <script src="./src/script.js"></script>
-  </body>
-</html>
 
+  <script src="./src/script.js"></script>
+</body>
+</html>
